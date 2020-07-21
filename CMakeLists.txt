@@ -62,5 +62,6 @@ endforeach()
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
 # Setting up deployment (let CPack generate a zip/dmg file)
+set_target_properties(${PROJECT_NAME} PROPERTIES qml_directory "${CMAKE_CURRENT_LIST_DIR}/src/qml")
 installLSLApp(${PROJECT_NAME})
 LSLGenerateCPackConfig()

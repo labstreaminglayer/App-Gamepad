@@ -2,6 +2,7 @@
 #define LSL_MANAGER_HPP
 
 #include <QObject>
+#include <QGamepad>
 #include <atomic>
 #include <memory>
 #include <thread>
@@ -15,9 +16,9 @@ public:
     ~LSLManager();
 
 public slots:
-    void linkStream(int gamepad_id,
-                    QString stream_name_sampled, QString stream_type_sampled, double sample_rate,
-                    QString stream_name_events, QString stream_type_events);
+    void linkStream(QGamepad* gamepad,
+                    QString stream_name_sampled, QString stream_type_sampled, QString stream_id_sampled, double sample_rate,
+                    QString stream_name_events, QString stream_type_events, QString stream_id_events);
 
 signals:
     void streamStatusChange(bool newStatus);

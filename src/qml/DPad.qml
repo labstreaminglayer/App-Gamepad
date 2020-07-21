@@ -48,8 +48,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import QtGamepad 1.0
+import QtQuick 2.12
+import QtGamepad 1.12
 
 Item {
     property Gamepad gamepad
@@ -67,11 +67,11 @@ Item {
         visible: gamepad.buttonUp
         color: "#3814abff"
         radius: 5
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width * 0.3
         height: parent.height * 0.3
+        anchors.top: parent.top
         anchors.topMargin: parent.height * 0.05
+        anchors.horizontalCenter: parent.horizontalCenter
     }
     Rectangle {
         id: downArea
