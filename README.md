@@ -2,7 +2,7 @@
 
 [Download from the release page](https://github.com/labstreaminglayer/App-Gamepad/releases).
 
-![Image of GamepadLSL](https://github.com/labstreaminglayer/App-Gamepad/blob/master/GamepadLSL-screenshot.png?raw=true)
+![Image of GamepadLSL](https://github.com/labstreaminglayer/App-Gamepad/blob/master/GamepadLSL-screenshot.PNG?raw=true)
 
 ## Description
 
