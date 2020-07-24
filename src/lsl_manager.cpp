@@ -1,7 +1,7 @@
 #include "lsl_manager.hpp"
 #include <algorithm>    // std::max
 #include <QGamepad>
-#include <QDebug>
+// #include <QDebug>
 #include <QtCore/QObject>
 #include <lsl_cpp.h>
 
@@ -21,7 +21,7 @@ void streaming_thread_function(
         std::string stream_name_events, std::string stream_type_events, std::string stream_id_events,
         std::atomic<bool> &shutdown)
 {
-    qDebug() << "gamepad " << gamepad->deviceId() << "isConnected(): " << gamepad->isConnected();
+    // qDebug() << "gamepad " << gamepad->deviceId() << "isConnected(): " << gamepad->isConnected();
 
     // Stream for irregular button-change events: https://doc.qt.io/qt-5/qgamepad.html#signals
     lsl::stream_info evstream_info(stream_name_events, stream_type_events, 2, lsl::IRREGULAR_RATE, lsl::cf_int8, stream_id_events); // TODO: unique_id
@@ -37,7 +37,7 @@ void streaming_thread_function(
     QObject::connect(gamepad, &QGamepad::buttonAChanged, [&evstream_outlet](bool pressed){
         std::vector<char> ev_dat{ 0, (char)pressed };
         evstream_outlet.push_sample(ev_dat);
-        qDebug() << "A " << pressed;
+        // qDebug() << "A " << pressed;
     });
     QObject::connect(gamepad, &QGamepad::buttonBChanged, [&evstream_outlet](bool pressed){
         std::vector<char> ev_dat{ 1, (char)pressed };
@@ -161,7 +161,7 @@ void LSLManager::linkStream(QGamepad* gamepad,
     else {
         if (gamepad->isConnected())
         {
-            qDebug() << "Starting thread";
+            // qDebug() << "Starting thread";
             streamer = std::make_unique<std::thread>(
                         &streaming_thread_function,
                         gamepad,

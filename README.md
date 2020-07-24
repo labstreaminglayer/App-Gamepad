@@ -1,6 +1,6 @@
 # Gamepad App for LabStreamingLayer
 
-[Download from the release page](https://github.com/labstreaminglayer/App-Gamepad/releases).
+[Windows (and soon Mac) users, please download from the release page](https://github.com/labstreaminglayer/App-Gamepad/releases).
 
 ![Image of GamepadLSL](https://github.com/labstreaminglayer/App-Gamepad/blob/master/GamepadLSL-screenshot.PNG?raw=true)
 
@@ -39,6 +39,10 @@ There's nothing platform-specific here, so it should build in Windows/Mac/Linux.
 1. An IDE. QtCreator or Visual Studio both tested to work.
 
 Then follow the general [LSL Application build instructions](https://labstreaminglayer.readthedocs.io/dev/app_build.html).
+
+### Known Issues
+
+The application crashes if you close/quit while the stream is linked.
 
 ## License
 
