@@ -2,7 +2,7 @@
 
 # Gamepad App for LabStreamingLayer
 
-[Windows (and soon Mac) users, please download from the release page](https://github.com/labstreaminglayer/App-Gamepad/releases).
+[Please download from the release page](https://github.com/labstreaminglayer/App-Gamepad/releases).
 
 ![Image of GamepadLSL](https://github.com/labstreaminglayer/App-Gamepad/blob/master/GamepadLSL-screenshot.PNG?raw=true)
 

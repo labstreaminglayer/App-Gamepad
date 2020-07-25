@@ -47,7 +47,7 @@ jobs:
            echo ${{ github.ref }}
            curl -L ${LSL_URL}/${LSL_RELEASE_PREFIX}${LSL_RELEASE}${LSL_RELEASE_SUFFIX}/liblsl-${LSL_RELEASE}-Linux64-bionic.deb -o liblsl.deb
            sudo dpkg -i liblsl.deb
-           sudo apt-get update --fix-missing
+           sudo apt-get update --fix-missing  # Needed for libpulse on azure mirror.
            sudo apt install -y libpulse-dev qtbase5-dev qtmultimedia5-dev qtdeclarative5-dev libqt5gamepad5-dev
 
     - name: Get liblsl and Qt (macOS)
@@ -99,7 +99,7 @@ jobs:
         # tag_name: ${{ github.ref }}  # ${{ github.ref }} is default
         name: Release ${{ github.ref }}
         draft: false
-        prerelease: true
+        prerelease: false
         # body_path: CHANGELOG.txt
         files: pkg-*/*
 
