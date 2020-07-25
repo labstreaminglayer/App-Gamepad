@@ -78,7 +78,7 @@ jobs:
 
   release:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     
     - name: Download Artifacts
@@ -101,5 +101,5 @@ jobs:
         draft: false
         prerelease: true
         # body_path: CHANGELOG.txt
-        files: pkg-*-latest/*
+        files: pkg-*/*
 
