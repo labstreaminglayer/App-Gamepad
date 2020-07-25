@@ -1,3 +1,5 @@
+![CI Status](https://github.com/labstreaminglayer/App-Gamepad/workflows/C/C++%20CI/badge.svg)
+
 # Gamepad App for LabStreamingLayer
 
 [Windows (and soon Mac) users, please download from the release page](https://github.com/labstreaminglayer/App-Gamepad/releases).
