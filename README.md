@@ -35,7 +35,9 @@ First check if a precompiled build is already available [on the release page](ht
 There's nothing platform-specific here, so it should build in Windows/Mac/Linux.
 
 1. cmake >= 3.15
-1. Qt. (version 5.15 used for development).
+1. Qt
+    * version 5.15 used for development typically installed with Qt Maintenance tool.
+    * Ubuntu, if not using Qt maintenance tool, must be on 20.04 or later, and use `sudo apt install -y qtbase5-dev qtmultimedia5-dev qtdeclarative5-dev libqt5gamepad5-dev`.
 1. An IDE. QtCreator or Visual Studio both tested to work.
 
 Then follow the general [LSL Application build instructions](https://labstreaminglayer.readthedocs.io/dev/app_build.html).
