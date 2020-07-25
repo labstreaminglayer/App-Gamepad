@@ -47,7 +47,8 @@ jobs:
            echo ${{ github.ref }}
            curl -L ${LSL_URL}/${LSL_RELEASE_PREFIX}${LSL_RELEASE}${LSL_RELEASE_SUFFIX}/liblsl-${LSL_RELEASE}-Linux64-bionic.deb -o liblsl.deb
            sudo dpkg -i liblsl.deb
-           sudo apt install -y qtbase5-dev qtmultimedia5-dev qtdeclarative5-dev libqt5gamepad5-dev
+           sudo apt-get update –fix-missing
+           sudo apt install -y libpulse-dev qtbase5-dev qtmultimedia5-dev qtdeclarative5-dev libqt5gamepad5-dev
 
     - name: Get liblsl and Qt (macOS)
       if: matrix.os == 'macOS-latest'
