@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(GamepadLSL
-	LANGUAGES CXX
-	VERSION 1.14.0
+	LANGUAGES C CXX
+	VERSION 1.15.0
 	)
 
 # also look for CMake modules in the cmake subfolder
@@ -17,7 +17,6 @@ find_package(LSL REQUIRED
 	PATH_SUFFIXES share/LSL)
 get_filename_component(LSL_PATH ${LSL_CONFIG} DIRECTORY)
 message(STATUS "Found LSL lib in ${LSL_PATH}")
-LSLAPP_Setup_Boilerplate()
 
 #: ## Using Qt
 #: Enable automatic compilation of .cpp->.moc, xy.ui->ui_xy.h and resource files
@@ -25,8 +24,15 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Qml Quick Gamepad)
-qt5_add_resources(qml_QRC src/qml.qrc)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+if(Qt${QT_VERSION_MAJOR} STREQUAL "Qt6")
+	# find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Core5Compat REQUIRED)
+	find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Quick Gamepad REQUIRED)
+	qt6_add_resources(qml_QRC src/qml.qrc)
+elseif(Qt${QT_VERSION_MAJOR} STREQUAL "Qt5")
+	find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Quick Gamepad REQUIRED)
+	qt5_add_resources(qml_QRC src/qml.qrc)
+endif()
 
 # Native `std::thread`s still require a platform thread library.
 # CMake can find and link to it with the `Threads` package (link your
@@ -44,12 +50,12 @@ add_executable(${PROJECT_NAME} MACOSX_BUNDLE WIN32
 
 target_link_libraries(${PROJECT_NAME}
 	PRIVATE
-	Qt5::Qml
-	Qt5::Quick
-	Qt5::Gamepad
-	Qt5::Network
-	Threads::Threads
-	LSL::lsl
+		Qt${QT_VERSION_MAJOR}::Qml
+		Qt${QT_VERSION_MAJOR}::Quick
+		Qt${QT_VERSION_MAJOR}::Gamepad
+		Qt${QT_VERSION_MAJOR}::Network
+		Threads::Threads
+		LSL::lsl
 )
 
 foreach(_lib ${THIRD_PARTY_DLLS})
@@ -67,4 +73,3 @@ installLSLApp(${PROJECT_NAME})
 LSLGenerateCPackConfig()  # Macro has some bugs...
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_VENDOR "Intheon")
-
