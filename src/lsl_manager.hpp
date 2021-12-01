@@ -26,6 +26,8 @@ signals:
 private:
     std::unique_ptr<std::thread> streamer{nullptr};
     std::atomic<bool> shutdown{false};  // flag indicating whether the streaming thread should quit
+
+    void stop_streamer();
 };
 
 #endif // LSL_MANAGER_HPP

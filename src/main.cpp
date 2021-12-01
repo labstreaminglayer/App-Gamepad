@@ -13,5 +13,6 @@ int main(int argc, char *argv[]) {
     LSLManager lsl_manager;
     engine.rootContext()->setContextProperty("lsl_manager", &lsl_manager);
 	engine.load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
+    QObject::connect(&engine, &QQmlApplicationEngine::quit, &QGuiApplication::quit);
     return app.exec();
 }

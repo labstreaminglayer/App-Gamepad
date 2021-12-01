@@ -12,6 +12,8 @@ LSLManager::LSLManager(QObject *parent)
 
 LSLManager::~LSLManager()
 {
+    if (streamer)
+        stop_streamer();
 }
 
 
@@ -147,16 +149,22 @@ void streaming_thread_function(
 }
 
 
+void LSLManager::stop_streamer()
+{
+    shutdown = true;
+    streamer->join();
+    streamer.reset();
+    streamStatusChange(!shutdown);  // emit signal so GUI may update stream-status indicator(s)
+}
+
+
 void LSLManager::linkStream(QGamepad* gamepad,
                             QString stream_name_sampled, QString stream_type_sampled, QString stream_id_sampled, double sample_rate,
                             QString stream_name_events, QString stream_type_events, QString stream_id_events)
 {
     if (streamer)
     {
-        shutdown = true;
-        streamer->join();
-        streamer.reset();
-        streamStatusChange(!shutdown);  // emit signal so GUI may update stream-status indicator(s)
+        stop_streamer();
     }
     else {
         if (gamepad->isConnected())
