@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(GamepadLSL
+	DESCRIPTION "Stream Gamepad (Xbox controller) analog stick positions and button events over LabStreamingLayer"
+	HOMEPAGE_URL "https://github.com/labstreaminglayer/App-Gamepad/"
 	LANGUAGES C CXX
 	VERSION 1.15.0
 	)
@@ -12,11 +14,14 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # and some default paths
 find_package(LSL REQUIRED
 	HINTS ${LSL_INSTALL_ROOT}
+	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/build/"
 	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/build/install"
+	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/out/build/x64-Release"
 	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/out/install/x64-Release"
 	PATH_SUFFIXES share/LSL)
-get_filename_component(LSL_PATH ${LSL_CONFIG} DIRECTORY)
-message(STATUS "Found LSL lib in ${LSL_PATH}")
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #: ## Using Qt
 #: Enable automatic compilation of .cpp->.moc, xy.ui->ui_xy.h and resource files
@@ -25,12 +30,11 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Quick Gamepad REQUIRED)
 if(Qt${QT_VERSION_MAJOR} STREQUAL "Qt6")
 	# find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Core5Compat REQUIRED)
-	find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Quick Gamepad REQUIRED)
 	qt6_add_resources(qml_QRC src/qml.qrc)
 elseif(Qt${QT_VERSION_MAJOR} STREQUAL "Qt5")
-	find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Quick Gamepad REQUIRED)
 	qt5_add_resources(qml_QRC src/qml.qrc)
 endif()
 
@@ -57,15 +61,6 @@ target_link_libraries(${PROJECT_NAME}
 		Threads::Threads
 		LSL::lsl
 )
-
-foreach(_lib ${THIRD_PARTY_DLLS})
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different  
-            $<TARGET_FILE:${_lib}>
-            $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-endforeach()
-
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
 # Setting up deployment (let CPack generate a zip/dmg file)
 set_target_properties(${PROJECT_NAME} PROPERTIES qml_directory "${CMAKE_CURRENT_LIST_DIR}/src/qml")
