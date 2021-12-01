@@ -28,8 +28,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install Qt (Windows)
-      if: matrix.os == 'windows-latest'
+    - name: Install Qt (Windows and MacOS)
+      if: matrix.os == 'windows-latest' || matrix.os == 'macOS-latest'
       uses: jurplel/install-qt-action@v2
       with:
         version: 5.15.0
@@ -49,19 +49,19 @@ jobs:
            sudo apt-get update --fix-missing  # Needed for libpulse on azure mirror.
            sudo apt install -y libpulse-dev qtbase5-dev qtmultimedia5-dev qtdeclarative5-dev libqt5gamepad5-dev
 
-    - name: Get liblsl and Qt (macOS)
+    - name: Get liblsl (macOS)
       if: matrix.os == 'macOS-latest'
       run: |
            curl -L ${LSL_URL}/${LSL_RELEASE_PREFIX}${LSL_RELEASE}${LSL_RELEASE_SUFFIX}/liblsl-${LSL_RELEASE}-OSX_amd64.tar.bz2 -o liblsl.tar.bz2
            mkdir LSL
            tar -xvf liblsl.tar.bz2 -C LSL
-           brew install qt
-           echo '::set-env name=CMAKE_PREFIX_PATH::/usr/local/opt/qt'
+#           brew install qt
+#           echo "CMAKE_PREFIX_PATH=/usr/local/opt/qt" >> $GITHUB_ENV
 
     - name: Configure CMake
       shell: bash
       run: |
-           cmake -S . -B build -DLSL_INSTALL_ROOT=$PWD/LSL/ -DCPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON -DCPACK_DEBIAN_PACKAGE_DEPENDS=1
+           cmake -S . -B build -DLSL_INSTALL_ROOT=$PWD/LSL/ -DLSL_COMFY_DEFAULTS=ON -DCPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON -DCPACK_DEBIAN_PACKAGE_DEPENDS=1
 
     - name: Make & Install
       run: cmake --build build --config Release -j --target install
