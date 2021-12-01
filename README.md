@@ -44,10 +44,6 @@ There's nothing platform-specific here, so it should build in Windows/Mac/Linux.
 
 Then follow the general [LSL Application build instructions](https://labstreaminglayer.readthedocs.io/dev/app_build.html).
 
-### Known Issues
-
-The application crashes if you close/quit while the stream is linked.
-
 ## License
 
 The source and the application components are provided under the MIT license,
