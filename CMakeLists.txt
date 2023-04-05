@@ -16,6 +16,7 @@ find_package(LSL REQUIRED
 	HINTS ${LSL_INSTALL_ROOT}
 	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/build/"
 	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/build/install"
+	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/install"
 	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/out/build/x64-Release"
 	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/out/install/x64-Release"
 	PATH_SUFFIXES share/LSL)
@@ -28,15 +29,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Qml Quick Gamepad REQUIRED)
-if(Qt${QT_VERSION_MAJOR} STREQUAL "Qt6")
-	# find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Core5Compat REQUIRED)
-	qt6_add_resources(qml_QRC src/qml.qrc)
-elseif(Qt${QT_VERSION_MAJOR} STREQUAL "Qt5")
-	qt5_add_resources(qml_QRC src/qml.qrc)
-endif()
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt5 REQUIRED COMPONENTS Qml Quick Gamepad)
+qt5_add_resources(qml_QRC src/qml.qrc)
 
 # Native `std::thread`s still require a platform thread library.
 # CMake can find and link to it with the `Threads` package (link your
@@ -56,7 +51,7 @@ target_link_libraries(${PROJECT_NAME}
 	PRIVATE
 		Qt${QT_VERSION_MAJOR}::Qml
 		Qt${QT_VERSION_MAJOR}::Quick
-		Qt${QT_VERSION_MAJOR}::Gamepad
+		Qt5::Gamepad
 		Qt${QT_VERSION_MAJOR}::Network
 		Threads::Threads
 		LSL::lsl
