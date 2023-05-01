@@ -4,7 +4,7 @@ project(GamepadLSL
 	DESCRIPTION "Stream Gamepad (Xbox controller) analog stick positions and button events over LabStreamingLayer"
 	HOMEPAGE_URL "https://github.com/labstreaminglayer/App-Gamepad/"
 	LANGUAGES C CXX
-	VERSION 1.15.0
+	VERSION 1.16.1
 	)
 
 # also look for CMake modules in the cmake subfolder
