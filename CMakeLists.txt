@@ -21,7 +21,7 @@ find_package(LSL REQUIRED
 	"${CMAKE_CURRENT_LIST_DIR}/../../LSL/liblsl/out/install/x64-Release"
 	PATH_SUFFIXES share/LSL)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #: ## Using Qt
