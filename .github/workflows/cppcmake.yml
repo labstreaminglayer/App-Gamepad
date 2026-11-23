@@ -12,8 +12,8 @@ on:
 env:
   LSL_RELEASE_URL: 'https://github.com/sccn/liblsl/releases/download'
   LSL_RELEASE_PREFIX: 'v'
-  LSL_RELEASE: '1.16.1'
-  LSL_RELEASE_SUFFIX: ''
+  LSL_RELEASE: '1.18.0'
+  LSL_RELEASE_SUFFIX: '.b8'
 
 defaults:
   run:
@@ -26,9 +26,9 @@ jobs:
     strategy:
       matrix:
         config:
-          - { name: "windows-x64", os: "windows-latest", qt_arch: "win64_msvc2019_64", arch: "amd64" }
+          - { name: "windows-x64", os: "windows-latest", qt_arch: "win64_msvc2019_64", arch: "x86_64" }
           - { name: "macOS-latest", os: "macOS-latest" }
-          - { name: "ubuntu-20.04", os: "ubuntu-20.04"}
+          - { name: "ubuntu-24.04", os: "ubuntu-24.04"}
           - { name: "ubuntu-22.04", os: "ubuntu-22.04"}
       fail-fast: false
 
@@ -39,13 +39,13 @@ jobs:
       if: startsWith(matrix.config.os, 'ubuntu')
       run: |
         sudo apt install -y libpugixml-dev
-        curl -L ${LSL_RELEASE_URL}/${LSL_RELEASE_PREFIX}${LSL_RELEASE}/liblsl-${LSL_RELEASE}-$(lsb_release -sc)_amd64.deb -o liblsl.deb
+        curl -L ${LSL_RELEASE_URL}/${LSL_RELEASE_PREFIX}${LSL_RELEASE}${LSL_RELEASE_SUFFIX}/liblsl-${LSL_RELEASE}-$(lsb_release -sc)_x86_64.deb -o liblsl.deb
         sudo apt install ./liblsl.deb
 
     - name: Download and extract liblsl (Windows)
       if: startsWith(matrix.config.os, 'windows')
       run: |
-        curl -L ${LSL_RELEASE_URL}/${LSL_RELEASE_PREFIX}${LSL_RELEASE}/liblsl-${LSL_RELEASE}-Win_${{ matrix.config.arch}}.zip -o liblsl.zip
+        curl -L ${LSL_RELEASE_URL}/${LSL_RELEASE_PREFIX}${LSL_RELEASE}${LSL_RELEASE_SUFFIX}/liblsl-${LSL_RELEASE}-Win_${{ matrix.config.arch}}.zip -o liblsl.zip
         7z x liblsl.zip -oLSL
 
     - name: Install liblsl (macOS)
